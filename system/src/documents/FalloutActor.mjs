@@ -1012,27 +1012,9 @@ export default class FalloutActor extends Actor {
 					}
 					break;
 				case CONFIG.FALLOUT.CONDITIONS.thirst.hydrated:
-					if (timeElapsed >= CONFIG.FALLOUT.TWO_HOURS_IN_SECONDS) {
+					if (timeElapsed >= CONFIG.FALLOUT.FOUR_HOURS_IN_SECONDS) {
 						fallout.logger.debug(`Condition Tracker: [Thirst] ${this.name} Hydrated > Thirsty`);
 						thirst = CONFIG.FALLOUT.CONDITIONS.thirst.thirsty;
-						lastChange += CONFIG.FALLOUT.TWO_HOURS_IN_SECONDS;
-						changed = true;
-						timeElapsed -= CONFIG.FALLOUT.TWO_HOURS_IN_SECONDS;
-					}
-					else {
-						keepChecking = false;
-					}
-					break;
-				case CONFIG.FALLOUT.CONDITIONS.thirst.thirsty:
-					if (timeElapsed >= CONFIG.FALLOUT.FOUR_HOURS_IN_SECONDS) {
-						fallout.logger.debug(`Condition Tracker: [Thirst] ${this.name} Thirsty > Dehydrated`);
-						thirst = CONFIG.FALLOUT.CONDITIONS.thirst.dehydrated;
-						if (!this.isSleeping) {
-							fallout.logger.debug(
-								`Condition Tracker: [Thirst] ${this.name} Fatigue ${fatigue} > ${fatigue + 1}`
-							);
-							fatigue++;
-						}
 						lastChange += CONFIG.FALLOUT.FOUR_HOURS_IN_SECONDS;
 						changed = true;
 						timeElapsed -= CONFIG.FALLOUT.FOUR_HOURS_IN_SECONDS;
@@ -1041,9 +1023,10 @@ export default class FalloutActor extends Actor {
 						keepChecking = false;
 					}
 					break;
-				case CONFIG.FALLOUT.CONDITIONS.thirst.dehydrated:
+				case CONFIG.FALLOUT.CONDITIONS.thirst.thirsty:
 					if (timeElapsed >= CONFIG.FALLOUT.EIGHT_HOURS_IN_SECONDS) {
-						fallout.logger.debug(`Condition Tracker: [Thirst] ${this.name} Dehydrated`);
+						fallout.logger.debug(`Condition Tracker: [Thirst] ${this.name} Thirsty > Dehydrated`);
+						thirst = CONFIG.FALLOUT.CONDITIONS.thirst.dehydrated;
 						if (!this.isSleeping) {
 							fallout.logger.debug(
 								`Condition Tracker: [Thirst] ${this.name} Fatigue ${fatigue} > ${fatigue + 1}`
@@ -1053,6 +1036,23 @@ export default class FalloutActor extends Actor {
 						lastChange += CONFIG.FALLOUT.EIGHT_HOURS_IN_SECONDS;
 						changed = true;
 						timeElapsed -= CONFIG.FALLOUT.EIGHT_HOURS_IN_SECONDS;
+					}
+					else {
+						keepChecking = false;
+					}
+					break;
+				case CONFIG.FALLOUT.CONDITIONS.thirst.dehydrated:
+					if (timeElapsed >= CONFIG.FALLOUT.TWELVE_HOURS_IN_SECONDS) {
+						fallout.logger.debug(`Condition Tracker: [Thirst] ${this.name} Dehydrated`);
+						if (!this.isSleeping) {
+							fallout.logger.debug(
+								`Condition Tracker: [Thirst] ${this.name} Fatigue ${fatigue} > ${fatigue + 1}`
+							);
+							fatigue++;
+						}
+						lastChange += CONFIG.FALLOUT.TWELVE_HOURS_IN_SECONDS;
+						changed = true;
+						timeElapsed -= CONFIG.FALLOUT.TWELVE_HOURS_IN_SECONDS;
 					}
 					else {
 						keepChecking = false;
