@@ -896,7 +896,7 @@ export default class FalloutActor extends Actor {
 
 		let conditionModifier = this.isSleeping
 			? CONFIG.FALLOUT.CONDITION_CHANGE_MODIFIER_SLEEP
-			: CONDITION_CHANGE_MODIFIER_DEFAULT;
+			: CONFIG.FALLOUT.CONDITION_CHANGE_MODIFIER_DEFAULT;
 
 		let keepChecking = true;
 		while (keepChecking) {
@@ -1002,7 +1002,7 @@ export default class FalloutActor extends Actor {
 		
 		let conditionModifier = this.isSleeping
 			? CONFIG.FALLOUT.CONDITION_CHANGE_MODIFIER_SLEEP
-			: CONDITION_CHANGE_MODIFIER_DEFAULT;
+			: CONFIG.FALLOUT.CONDITION_CHANGE_MODIFIER_DEFAULT;
 
 		let keepChecking = true;
 		while (keepChecking) {
